@@ -8,7 +8,8 @@ g.maplocalleader = " "
 -- Settings
 local opt = vim.opt
 
--- opt.termguicolors = false
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 opt.termguicolors = true
 -- opt.shell = bash
 opt.expandtab = true
@@ -57,6 +58,10 @@ autocmd("BufReadPost", {
     command = 'set filetype=dockerfile'
 })
 autocmd("FileType", {
+    pattern = {"vue", "yaml", "yml"},
+    command = 'set tabstop=2|set shiftwidth=2|set expandtab'
+})
+autocmd("FileType", {
     pattern = {"php", "java", "typescript", "javascript", "lua"},
     command = 'set tabstop=4|set shiftwidth=4|set expandtab'
 })
@@ -77,7 +82,13 @@ local map = vim.keymap.set
 
 map("n", "<C-w>Q", ":tabclose<CR>")
 map("n", "<leader>nh", ":nohl<CR>")
-map("n", "<leader>tr", ":split term://zsh<CR>i")
+-- map("n", "<leader>tr", ":split term://zsh<CR>i")
+map("n", "<leader>tr", function()
+  vim.cmd("split")          -- 分屏
+  vim.cmd("terminal zsh")   -- 打开终端
+  vim.cmd("tcd " .. vim.fn.getcwd()) -- 自动 cd 到当前 nvim 目录
+  vim.cmd("startinsert")    -- 进入输入模式
+end)
 map("t", "<A-q>", "<C-\\><C-n>")
 map("n", "<leader>num", ":set number relativenumber<CR>")
 map("n", "<leader>nonum", ":set nonumber norelativenumber<CR>")

@@ -15,6 +15,9 @@ return {
                     disabled_filetypes = {
                         statusline = {
                             "NvimTree",
+                            "Avante",
+                            "AvanteInput",
+                            "AvanteSelectedFiles"
                         },
                         tabline = {
                             "NvimTree",
